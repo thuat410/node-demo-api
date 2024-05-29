@@ -1,0 +1,38 @@
+version: "3.8"
+
+services:
+  database:
+    image: mongo:6.0.13
+    environment:
+      MONGO_INITDB_DATABASE: ${DB_NAME}
+      MONGO_INITDB_ROOT_USERNAME: ${DB_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - database-config:/data/config
+      - database-data:/data/db
+
+  redis:
+    image: redis:7-alpine
+    volumes:
+      - .docker/data/redis:/data
+    restart: unless-stopped
+
+  node-api:
+    image: apis/node-demo-api:v1
+    environment:
+      - DB_HOST=${DB_HOST}
+      - DB_NAME=${DB_NAME}
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PORT=${REDIS_PORT}
+      - PORT=${PORT}
+    ports:
+        - "${PORT}:${PORT}"
+    restart: unless-stopped
+    depends_on:
+        - redis
+        - database
+
+
+volumes:
+  database-config:
+  database-data:

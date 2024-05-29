@@ -24,10 +24,12 @@
   },
   "homepage": "https://github.com/thuat410/node-demo-api#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "mongoose": "^8.4.0",
-    "nodemon": "^3.1.2"
+    "nodemon": "^3.1.2",
+    "passport": "^0.7.0"
   },
   "devDependencies": {
     "eslint": "^9.3.0",
